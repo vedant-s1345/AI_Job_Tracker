@@ -31,9 +31,7 @@
 
 ---
 
-## 📸 Screenshots
 
-> *Dashboard · Pipeline Board · Analytics · T&P Monitor · Resume Manager*
 
 ## 📸 Screenshots
 
