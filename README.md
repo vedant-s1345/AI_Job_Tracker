@@ -37,11 +37,15 @@
 
 | Dashboard | Pipeline (Kanban) |
 |---|---|
-| ![Dashboard](https://placehold.co/600x340/070a12/00c9a7?text=Dashboard) | ![Pipeline](https://placehold.co/600x340/070a12/6366f1?text=Pipeline+Board) |
+| ![Dashboard] <img width="1917" height="905" alt="image" src="https://github.com/user-attachments/assets/931b1354-c6fb-479b-a625-bce576291d98" />
+ | ![Pipeline] <img width="1919" height="906" alt="image" src="https://github.com/user-attachments/assets/62c453a0-21e6-4858-a21a-52ba7e2c62a3" />
+ |
 
 | Analytics | T&P Monitor |
 |---|---|
-| ![Analytics](https://placehold.co/600x340/070a12/a855f7?text=Analytics) | ![TnP](https://placehold.co/600x340/070a12/ef4444?text=T%26P+Monitor) |
+| ![Analytics] <img width="1919" height="906" alt="image" src="https://github.com/user-attachments/assets/58e50810-6d0a-4bc0-b18f-75ef759cd329" />
+ | ![TnP] <img width="1918" height="897" alt="image" src="https://github.com/user-attachments/assets/c23c5f32-f2e3-4c17-ae3c-065f4289cdc6" />
+ |
 
 ---
 
