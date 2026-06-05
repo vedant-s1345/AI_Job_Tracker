@@ -14,10 +14,10 @@ const NAV_MAIN = [
   { key: 'resume',    label: 'Resumes'   },
 ];
 const NAV_PLACEMENT = [
-  { key: 'tnp',       label: 'T&P Mails' },
+  { key: 'tnp', label: 'T&P Mails' },
 ];
 const NAV_BOTTOM = [
-  { key: 'settings',  label: 'Settings'  },
+  { key: 'settings', label: 'Settings' },
 ];
 
 const PIPE_COLS = [
@@ -27,16 +27,30 @@ const PIPE_COLS = [
   { key: 'offered',      color: '#22c55e' },
   { key: 'rejected',     color: '#ef4444' },
 ];
-const TAG_COLORS = { 'full-stack':'#00c9a7', 'java_backend':'#f5a623', 'aiml':'#a855f7', 'frontend':'#3b82f6', 'devops':'#22c55e' };
+const TAG_COLORS = {
+  'full-stack':   '#00c9a7',
+  'java_backend': '#f5a623',
+  'aiml':         '#a855f7',
+  'frontend':     '#3b82f6',
+  'devops':       '#22c55e',
+};
 const tagColor = t => TAG_COLORS[t] || '#6366f1';
 
 function NavItem({ item, active, onNav, badge, badgeRed }) {
   return (
-    <button className={`sb-item${active ? ' sb-item--on' : ''}`} onClick={() => onNav(item.key)}>
+    <button
+      className={`sb-item${active ? ' sb-item--on' : ''}`}
+      onClick={() => onNav(item.key)}
+    >
       <span className="sb-ico">{ICO[item.key]}</span>
       <span className="sb-lbl">{item.label}</span>
       {badge > 0 && (
-        <span className="sb-badge" style={badgeRed ? { background:'#ef4444', borderColor:'#ef4444', color:'#fff' } : {}}>
+        <span
+          className="sb-badge"
+          style={badgeRed
+            ? { background: '#ef4444', borderColor: '#ef4444', color: '#fff' }
+            : {}}
+        >
           {badge}
         </span>
       )}
@@ -44,14 +58,34 @@ function NavItem({ item, active, onNav, badge, badgeRed }) {
   );
 }
 
-export default function Sidebar({ activePage, onNav, onNewJob, stats, activeResumeTag, tnpNewCount }) {
+export default function Sidebar({
+  activePage,
+  onNav,
+  onNewJob,
+  stats,
+  activeResumeTag,
+  tnpNewCount,
+  isDemo,
+  onToggleDemo,
+  isOpen,
+  onClose,
+}) {
   const total  = stats?.total || 0;
   const maxCnt = Math.max(...PIPE_COLS.map(s => stats?.[s.key] || 0), 1);
   const tc     = tagColor(activeResumeTag);
 
   return (
-    <aside className="sidebar">
-      {/* Brand */}
+    <aside className={`sidebar${isOpen ? ' sidebar--open' : ''}`}>
+
+      {/* ── Mobile close button ─────────────────────────────────────────── */}
+      <button className="sb-mobile-close" onClick={onClose} aria-label="Close menu">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.2" width="14" height="14">
+          <line x1="3" y1="3" x2="17" y2="17"/>
+          <line x1="17" y1="3" x2="3" y2="17"/>
+        </svg>
+      </button>
+
+      {/* ── Brand ───────────────────────────────────────────────────────── */}
       <div className="sb-brand">
         <div className="sb-logo">
           <svg viewBox="0 0 24 24" fill="none" stroke="#00c9a7" strokeWidth="1.5" width="22" height="22">
@@ -64,37 +98,58 @@ export default function Sidebar({ activePage, onNav, onNewJob, stats, activeResu
         </div>
       </div>
 
-      {/* Main nav */}
+      {/* ── Navigation ──────────────────────────────────────────────────── */}
       <nav className="sb-nav">
         <p className="sb-sect">Main</p>
         {NAV_MAIN.map(n => (
-          <NavItem key={n.key} item={n} active={activePage === n.key} onNav={onNav}
-            badge={n.key === 'pipeline' ? total : 0} />
+          <NavItem
+            key={n.key}
+            item={n}
+            active={activePage === n.key}
+            onNav={onNav}
+            badge={n.key === 'pipeline' ? total : 0}
+          />
         ))}
 
         <p className="sb-sect" style={{ marginTop: 12 }}>Placement</p>
         {NAV_PLACEMENT.map(n => (
-          <NavItem key={n.key} item={n} active={activePage === n.key} onNav={onNav}
-            badge={tnpNewCount} badgeRed={tnpNewCount > 0} />
+          <NavItem
+            key={n.key}
+            item={n}
+            active={activePage === n.key}
+            onNav={onNav}
+            badge={tnpNewCount}
+            badgeRed={tnpNewCount > 0}
+          />
         ))}
 
         <p className="sb-sect" style={{ marginTop: 12 }}>System</p>
         {NAV_BOTTOM.map(n => (
-          <NavItem key={n.key} item={n} active={activePage === n.key} onNav={onNav} />
+          <NavItem
+            key={n.key}
+            item={n}
+            active={activePage === n.key}
+            onNav={onNav}
+          />
         ))}
       </nav>
 
-      {/* Active resume indicator */}
+      {/* ── Active resume indicator ─────────────────────────────────────── */}
       <div className="sb-resume-ind">
         <p className="sb-sect">Active Resume</p>
-        <div className="sb-resume-tag" style={{ '--rtc': tc }} onClick={() => onNav('resume')} title="Click to manage resumes">
-          <span className="sb-resume-dot" style={{ background: tc }}/>
+        <div
+          className="sb-resume-tag"
+          style={{ '--rtc': tc }}
+          onClick={() => onNav('resume')}
+          title="Click to manage resumes"
+        >
+          <span className="sb-resume-dot"  style={{ background: tc }}/>
           <span className="sb-resume-name">{activeResumeTag || 'full-stack'}</span>
           <span className="sb-resume-edit">→</span>
         </div>
       </div>
 
-      {/* Pipeline health */}
+      {/* ── Pipeline health ─────────────────────────────────────────────── */}
       {total > 0 && (
         <div className="sb-health">
           <p className="sb-sect">Pipeline Health</p>
@@ -102,16 +157,25 @@ export default function Sidebar({ activePage, onNav, onNewJob, stats, activeResu
             <div key={s.key} className="sb-hrow">
               <span className="sb-hkey">{s.key}</span>
               <div className="sb-htrack">
-                <div className="sb-hfill" style={{ width:`${((stats?.[s.key]||0)/maxCnt)*100}%`, background:s.color }}/>
+                <div
+                  className="sb-hfill"
+                  style={{
+                    width: `${((stats?.[s.key] || 0) / maxCnt) * 100}%`,
+                    background: s.color,
+                  }}
+                />
               </div>
-              <span className="sb-hn" style={{ color:s.color }}>{stats?.[s.key]||0}</span>
+              <span className="sb-hn" style={{ color: s.color }}>
+                {stats?.[s.key] || 0}
+              </span>
             </div>
           ))}
         </div>
       )}
 
-      {/* Footer */}
+      {/* ── Footer ──────────────────────────────────────────────────────── */}
       <div className="sb-foot">
+        {/* User info */}
         <div className="sb-user">
           <div className="sb-avatar">V</div>
           <div>
@@ -119,9 +183,29 @@ export default function Sidebar({ activePage, onNav, onNewJob, stats, activeResu
             <div className="sb-urole">Full-Stack Dev</div>
           </div>
         </div>
+
+        {/* Demo mode toggle */}
+        <button
+          className={`sb-demo-toggle${isDemo ? ' sb-demo-toggle--on' : ''}`}
+          onClick={onToggleDemo}
+          title={isDemo ? 'Exit demo mode' : 'Enable demo mode to hide your real data'}
+        >
+          <span className="sb-demo-ico">🎭</span>
+          <span className="sb-demo-lbl">
+            {isDemo ? 'Exit Demo Mode' : 'Demo Mode'}
+          </span>
+          <span className={`sb-demo-dot${isDemo ? ' sb-demo-dot--on' : ''}`}/>
+        </button>
+
+        {/* Parse JD CTA */}
         <button className="sb-parse" onClick={onNewJob}>
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" width="12" height="12">
-            <line x1="8" y1="1" x2="8" y2="15"/><line x1="1" y1="8" x2="15" y2="8"/>
+          <svg
+            viewBox="0 0 16 16" fill="none"
+            stroke="currentColor" strokeWidth="2.2"
+            width="12" height="12"
+          >
+            <line x1="8" y1="1" x2="8" y2="15"/>
+            <line x1="1" y1="8" x2="15" y2="8"/>
           </svg>
           Parse JD
         </button>

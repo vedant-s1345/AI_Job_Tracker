@@ -5,7 +5,7 @@ import * as api from '../api/client';
 const deadlineInfo = (deadline) => {
   if (!deadline) return null;
   const days = Math.ceil((new Date(deadline) - Date.now()) / 86400000);
-  if (days < 0)  return { label: 'Expired',        color: '#3a4d68', urgent: false };
+  if (days < 0)   return { label: 'Expired',       color: '#3a4d68', urgent: false };
   if (days === 0) return { label: 'Today!',         color: '#ef4444', urgent: true  };
   if (days <= 2)  return { label: `${days}d left`,  color: '#ef4444', urgent: true  };
   if (days <= 5)  return { label: `${days}d left`,  color: '#f5a623', urgent: false };
@@ -26,9 +26,10 @@ function OppCard({ opp, onStatus, onAddToPipeline, onSelect }) {
   const ini = opp.company.slice(0, 2).toUpperCase();
 
   return (
-    <div className={`opp-card${opp.status === 'ignored' ? ' opp-card--ignored' : ''}`}
-      onClick={() => onSelect(opp)}>
-
+    <div
+      className={`opp-card${opp.status === 'ignored' ? ' opp-card--ignored' : ''}`}
+      onClick={() => onSelect(opp)}
+    >
       {/* Header */}
       <div className="opp-card-hd">
         <div className="opp-avi">{ini}</div>
@@ -36,7 +37,10 @@ function OppCard({ opp, onStatus, onAddToPipeline, onSelect }) {
           <p className="opp-company">{opp.company}</p>
           <p className="opp-role">{opp.role}</p>
         </div>
-        <span className="opp-status-badge" style={{ color: sm.color, borderColor: sm.color + '50', background: sm.color + '15' }}>
+        <span
+          className="opp-status-badge"
+          style={{ color: sm.color, borderColor: sm.color + '50', background: sm.color + '15' }}
+        >
           {sm.label}
         </span>
       </div>
@@ -48,16 +52,18 @@ function OppCard({ opp, onStatus, onAddToPipeline, onSelect }) {
         {opp.ctc &&
           <span className="opp-meta-item opp-meta-ctc">💰 {opp.ctc}</span>}
         {dl &&
-          <span className="opp-meta-item opp-deadline"
-            style={{ color: dl.color, background: dl.color + '15', borderColor: dl.color + '40' }}>
-            {dl.urgent ? '⚠ ' : '⏰ '}{new Date(opp.deadline).toLocaleDateString('en-IN', { day:'numeric', month:'short' })} · {dl.label}
+          <span
+            className="opp-meta-item opp-deadline"
+            style={{ color: dl.color, background: dl.color + '15', borderColor: dl.color + '40' }}
+          >
+            {dl.urgent ? '⚠ ' : '⏰ '}
+            {new Date(opp.deadline).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+            {' · '}{dl.label}
           </span>}
       </div>
 
       {/* Eligibility */}
-      {opp.eligibility && (
-        <p className="opp-eligibility">🎓 {opp.eligibility}</p>
-      )}
+      {opp.eligibility && <p className="opp-eligibility">🎓 {opp.eligibility}</p>}
 
       {/* Skills */}
       {opp.skills_required?.length > 0 && (
@@ -71,15 +77,12 @@ function OppCard({ opp, onStatus, onAddToPipeline, onSelect }) {
       )}
 
       {/* Summary */}
-      {opp.summary && (
-        <p className="opp-summary">{opp.summary}</p>
-      )}
+      {opp.summary && <p className="opp-summary">{opp.summary}</p>}
 
       {/* Actions */}
       <div className="opp-actions" onClick={e => e.stopPropagation()}>
         {opp.status !== 'applied' && (
-          <button className="opp-btn opp-btn--add"
-            onClick={() => onAddToPipeline(opp._id)}>
+          <button className="opp-btn opp-btn--add" onClick={() => onAddToPipeline(opp._id)}>
             + Add to Pipeline
           </button>
         )}
@@ -87,26 +90,22 @@ function OppCard({ opp, onStatus, onAddToPipeline, onSelect }) {
           <span className="opp-linked">✓ In Pipeline</span>
         )}
         {opp.status === 'new' && (
-          <button className="opp-btn opp-btn--star"
-            onClick={() => onStatus(opp._id, 'interested')}>
+          <button className="opp-btn opp-btn--star" onClick={() => onStatus(opp._id, 'interested')}>
             ⭐ Interested
           </button>
         )}
         {opp.status === 'interested' && (
-          <button className="opp-btn opp-btn--star opp-btn--star-on"
-            onClick={() => onStatus(opp._id, 'new')}>
+          <button className="opp-btn opp-btn--star opp-btn--star-on" onClick={() => onStatus(opp._id, 'new')}>
             ⭐ Interested
           </button>
         )}
         {opp.status !== 'ignored' && opp.status !== 'applied' && (
-          <button className="opp-btn opp-btn--ignore"
-            onClick={() => onStatus(opp._id, 'ignored')}>
+          <button className="opp-btn opp-btn--ignore" onClick={() => onStatus(opp._id, 'ignored')}>
             Ignore
           </button>
         )}
         {opp.status === 'ignored' && (
-          <button className="opp-btn"
-            onClick={() => onStatus(opp._id, 'new')}>
+          <button className="opp-btn" onClick={() => onStatus(opp._id, 'new')}>
             Restore
           </button>
         )}
@@ -127,7 +126,10 @@ function OppDetailModal({ opp, onClose, onStatus, onAddToPipeline }) {
           <div style={{ flex: 1, minWidth: 0 }}>
             <p className="modal-eyebrow">T&P OPPORTUNITY · {opp.email_from}</p>
             <h2 className="modal-title" style={{ fontSize: 19 }}>{opp.role}</h2>
-            <p className="modal-sub">{opp.company}{opp.location !== 'Not specified' ? ` · ${opp.location}` : ''}</p>
+            <p className="modal-sub">
+              {opp.company}
+              {opp.location !== 'Not specified' ? ` · ${opp.location}` : ''}
+            </p>
           </div>
           <button className="modal-close" onClick={onClose}>✕</button>
         </div>
@@ -145,7 +147,7 @@ function OppDetailModal({ opp, onClose, onStatus, onAddToPipeline }) {
               <div className="opp-detail-item">
                 <span className="opp-di-lbl">Deadline</span>
                 <span className="opp-di-val" style={{ color: dl?.color }}>
-                  {new Date(opp.deadline).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })}
+                  {new Date(opp.deadline).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
                   {dl && ` (${dl.label})`}
                 </span>
               </div>
@@ -184,7 +186,9 @@ function OppDetailModal({ opp, onClose, onStatus, onAddToPipeline }) {
               <span><strong>Received:</strong> {opp.email_date ? new Date(opp.email_date).toLocaleString('en-IN') : '—'}</span>
             </div>
             {opp.email_body && (
-              <pre className="opp-email-body">{opp.email_body.slice(0, 1500)}{opp.email_body.length > 1500 ? '\n…' : ''}</pre>
+              <pre className="opp-email-body">
+                {opp.email_body.slice(0, 1500)}{opp.email_body.length > 1500 ? '\n…' : ''}
+              </pre>
             )}
           </div>
 
@@ -193,10 +197,14 @@ function OppDetailModal({ opp, onClose, onStatus, onAddToPipeline }) {
             <p className="det-label">Status</p>
             <div className="det-status-row">
               {Object.entries(STATUS_META).map(([k, v]) => (
-                <button key={k}
+                <button
+                  key={k}
                   className={`status-pill${opp.status === k ? ' status-pill--on' : ''}`}
-                  style={opp.status === k ? { color: v.color, background: v.color + '22', borderColor: v.color } : {}}
-                  onClick={() => onStatus(opp._id, k)}>
+                  style={opp.status === k
+                    ? { color: v.color, background: v.color + '22', borderColor: v.color }
+                    : {}}
+                  onClick={() => onStatus(opp._id, k)}
+                >
                   {v.label}
                 </button>
               ))}
@@ -211,7 +219,9 @@ function OppDetailModal({ opp, onClose, onStatus, onAddToPipeline }) {
             </button>
           )}
           {opp.status === 'applied' && (
-            <span style={{ color: '#22c55e', fontFamily: 'var(--mono)', fontSize: 12 }}>✓ Already in pipeline</span>
+            <span style={{ color: '#22c55e', fontFamily: 'var(--mono)', fontSize: 12 }}>
+              ✓ Already in pipeline
+            </span>
           )}
           <span style={{ flex: 1 }} />
           <button className="btn-ghost" onClick={onClose}>Close</button>
@@ -222,16 +232,24 @@ function OppDetailModal({ opp, onClose, onStatus, onAddToPipeline }) {
 }
 
 /* ── Main Page ───────────────────────────────────────────────────────── */
-export default function TnPPage({ showToast, onJobsChange }) {
-  const [opps,       setOpps]       = useState([]);
-  const [stats,      setStats]      = useState(null);
-  const [loading,    setLoading]    = useState(true);
-  const [filter,     setFilter]     = useState('all');  // all|new|interested|applied|ignored
-  const [search,     setSearch]     = useState('');
-  const [selected,   setSelected]   = useState(null);
-  const [addingId,   setAddingId]   = useState(null);
+// ← DEMO MODE: added isDemo, demoOpportunities, demoStats props
+export default function TnPPage({ showToast, onJobsChange, isDemo, demoOpportunities, demoStats }) {
+  const [opps,     setOpps]     = useState([]);
+  const [stats,    setStats]    = useState(null);
+  const [loading,  setLoading]  = useState(true);
+  const [filter,   setFilter]   = useState('all');
+  const [search,   setSearch]   = useState('');
+  const [selected, setSelected] = useState(null);
+  const [addingId, setAddingId] = useState(null);
 
   const loadAll = useCallback(async () => {
+    // ← DEMO MODE: use fake data when demo is active
+    if (isDemo) {
+      setOpps(demoOpportunities || []);
+      setStats(demoStats || null);
+      setLoading(false);
+      return;
+    }
     try {
       const [oppsRes, statsRes] = await Promise.all([
         api.fetchTnP(),
@@ -244,11 +262,13 @@ export default function TnPPage({ showToast, onJobsChange }) {
     } finally {
       setLoading(false);
     }
-  }, [showToast]);
+  }, [showToast, isDemo, demoOpportunities, demoStats]);
 
   useEffect(() => { loadAll(); }, [loadAll]);
 
   const handleStatus = async (id, status) => {
+    // ← DEMO MODE: block mutations
+    if (isDemo) { showToast('Demo mode — data is read-only 🎭', 'error'); return; }
     try {
       const res = await api.updateTnP(id, { status });
       setOpps(prev => prev.map(o => o._id === id ? res.data : o));
@@ -259,6 +279,8 @@ export default function TnPPage({ showToast, onJobsChange }) {
   };
 
   const handleAddToPipeline = async (id) => {
+    // ← DEMO MODE: block mutations
+    if (isDemo) { showToast('Demo mode — data is read-only 🎭', 'error'); return; }
     setAddingId(id);
     try {
       const res = await api.addTnPToPipeline(id);
@@ -279,16 +301,16 @@ export default function TnPPage({ showToast, onJobsChange }) {
       const q = search.toLowerCase();
       list = list.filter(o =>
         o.company.toLowerCase().includes(q) ||
-        o.role.toLowerCase().includes(q));
+        o.role.toLowerCase().includes(q)
+      );
     }
     return list;
   }, [opps, filter, search]);
 
-  /* ── Urgency sort: deadline-soon first, then createdAt ── */
   const sorted = useMemo(() => [...visible].sort((a, b) => {
     if (a.deadline && b.deadline) return new Date(a.deadline) - new Date(b.deadline);
-    if (a.deadline) return -1;
-    if (b.deadline) return 1;
+    if (a.deadline)  return -1;
+    if (b.deadline)  return 1;
     return new Date(b.createdAt) - new Date(a.createdAt);
   }), [visible]);
 
@@ -308,7 +330,9 @@ export default function TnPPage({ showToast, onJobsChange }) {
         <div>
           <h1 className="page-title">T&P Opportunities</h1>
           <p className="page-sub">
-            Auto-tracked from your college placement cell emails
+            {isDemo
+              ? 'Sample T&P opportunities — demo data only'
+              : 'Auto-tracked from your college placement cell emails'}
             {stats?.deadlineSoon > 0 && (
               <span className="tnp-deadline-warn">
                 {' '}· ⚠ {stats.deadlineSoon} deadline{stats.deadlineSoon > 1 ? 's' : ''} within 3 days
@@ -322,11 +346,11 @@ export default function TnPPage({ showToast, onJobsChange }) {
       {stats && (
         <div className="tnp-stats">
           {[
-            { label: 'New',       n: stats.new,        color: '#00c9a7' },
-            { label: 'Interested',n: stats.interested, color: '#3b82f6' },
-            { label: 'Applied',   n: stats.applied,    color: '#22c55e' },
-            { label: 'Due Soon',  n: stats.deadlineSoon, color: '#ef4444' },
-            { label: 'Total',     n: stats.total,      color: '#7b8ba5' },
+            { label: 'New',        n: stats.new,          color: '#00c9a7' },
+            { label: 'Interested', n: stats.interested,   color: '#3b82f6' },
+            { label: 'Applied',    n: stats.applied,      color: '#22c55e' },
+            { label: 'Due Soon',   n: stats.deadlineSoon, color: '#ef4444' },
+            { label: 'Total',      n: stats.total,        color: '#7b8ba5' },
           ].map(s => (
             <div key={s.label} className="tnp-stat">
               <span className="tnp-stat-n" style={{ color: s.color }}>{s.n}</span>
@@ -340,9 +364,11 @@ export default function TnPPage({ showToast, onJobsChange }) {
       <div className="tnp-filter-bar">
         <div className="tnp-tabs">
           {TAB_FILTERS.map(t => (
-            <button key={t.key}
+            <button
+              key={t.key}
               className={`tnp-tab${filter === t.key ? ' tnp-tab--on' : ''}`}
-              onClick={() => setFilter(t.key)}>
+              onClick={() => setFilter(t.key)}
+            >
               {t.label}
               {t.n !== undefined && <span className="tnp-tab-n">{t.n}</span>}
             </button>
@@ -352,8 +378,12 @@ export default function TnPPage({ showToast, onJobsChange }) {
           <svg className="filter-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" width="13" height="13">
             <circle cx="7" cy="7" r="4.5"/><line x1="10.5" y1="10.5" x2="14" y2="14"/>
           </svg>
-          <input className="filter-inp" placeholder="Search company or role…"
-            value={search} onChange={e => setSearch(e.target.value)} />
+          <input
+            className="filter-inp"
+            placeholder="Search company or role…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
         </div>
       </div>
 
