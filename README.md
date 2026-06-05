@@ -285,12 +285,11 @@ Import and configure 4 workflows in n8n:
 - [x] PDF JD upload + text extraction
 - [x] T&P email monitor via n8n + Gmail
 - [x] Daily deadline reminder email
-- [ ] Deploy backend to Railway
-- [ ] Deploy frontend to Vercel
-- [ ] Deploy n8n to cloud (24/7 automation)
-- [ ] Analytics charts (Recharts — score trends, pipeline flow)
-- [ ] Flutter mobile app
-- [ ] Interview prep AI assistant per job
+- [x] Deploy backend to Railway
+- [x] Deploxy frontend to Vercel
+- [x] Deploy n8n to cloud (Railway) (24/7 automation)
+- [x] Analytics charts (Recharts — score trends, pipeline flow)
+
 
 ---
 
