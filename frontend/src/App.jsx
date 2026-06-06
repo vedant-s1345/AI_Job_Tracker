@@ -137,7 +137,10 @@ export default function App() {
       const [jRes, sRes] = await Promise.all([api.fetchJobs(), api.fetchPipeline()]);
       setJobs(jRes.data);
       setStats(sRes.data);
-      if (selected?._id === jobId) setSelected(jRes.data.find(j => j._id === jobId));
+      // ← KEY FIX: close and reopen modal with fresh data
+      const updatedJob = jRes.data.find(j => j._id === jobId);
+      setSelected(null);                    // close first
+      setTimeout(() => setSelected(updatedJob), 50);  // reopen with new data
       showToast(`Scored with "${tag}" resume!`);
     } catch {
       showToast('Scoring failed — check n8n is running on port 5678', 'error');
@@ -288,7 +291,7 @@ export default function App() {
               />
             )}
             {page === 'settings' && !isDemo && <SettingsPage showToast={showToast} />}
-            
+
             {page === 'tnp'        && (
               <TnPPage
                 showToast={showToast}
