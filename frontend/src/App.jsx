@@ -62,7 +62,9 @@ export default function App() {
   // });
 
   // Demo Mode OFF
-  const [isDemo, setIsDemo] = useState(false);
+  cconst [isDemo, setIsDemo] = useState(
+    () => window.location.hostname !== 'localhost'
+  );
 
   // Mobile sidebar open/closed
   const [sidebarOpen, setSidebarOpen] = useState(false);
