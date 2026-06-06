@@ -132,20 +132,44 @@ export default function App() {
     if (isDemo) { demoBlocked(); return; }
     const tag = resumeTag || activeResumeTag;
     setScoringJobs(prev => new Set([...prev, jobId]));
+
+    const stopScoring = () => {
+      setScoringJobs(prev => { const n = new Set(prev); n.delete(jobId); return n; });
+    };
+
     try {
       await api.scoreJobWithAI(jobId, tag);
-      const [jRes, sRes] = await Promise.all([api.fetchJobs(), api.fetchPipeline()]);
-      setJobs(jRes.data);
-      setStats(sRes.data);
-      // ← KEY FIX: close and reopen modal with fresh data
-      const updatedJob = jRes.data.find(j => j._id === jobId);
-      setSelected(null);                    // close first
-      setTimeout(() => setSelected(updatedJob), 50);  // reopen with new data
-      showToast(`Scored with "${tag}" resume!`);
+
+      // n8n takes 5-10s — poll every 2s until score appears
+      let attempts = 0;
+      const poll = async () => {
+        attempts++;
+        try {
+          const [jRes, sRes] = await Promise.all([
+            api.fetchJobs(),
+            api.fetchPipeline()
+          ]);
+          const updated = jRes.data.find(j => j._id === jobId);
+
+          if (updated?.match_score !== null || attempts >= 15) {
+            // Score ready (or timeout after 30s)
+            setJobs(jRes.data);
+            setStats(sRes.data);
+            setSelected(null);
+            setTimeout(() => setSelected(updated), 50);
+            showToast(`Scored with "${tag}" resume!`);
+            stopScoring();
+          } else {
+            // Not ready yet — try again in 2s
+            setTimeout(poll, 2000);
+          }
+        } catch { stopScoring(); }
+      };
+
+      setTimeout(poll, 3000); // first check after 3s
     } catch {
       showToast('Scoring failed — check n8n is running on port 5678', 'error');
-    } finally {
-      setScoringJobs(prev => { const n = new Set(prev); n.delete(jobId); return n; });
+      stopScoring();
     }
   };
 
