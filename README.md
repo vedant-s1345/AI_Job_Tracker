@@ -38,8 +38,7 @@
 
 | Dashboard | Pipeline (Kanban) |
 |---|---|
-| <img src="https://github.com/user-attachments/assets/efddbdbe-2421-40b2-80e1-f852c76ed847" width="480"/>
- | <img src="https://github.com/user-attachments/assets/ec63b29a-1ef7-40ec-b07d-50ca18e81853"  width="480" />
+| <img src="https://github.com/user-attachments/assets/efddbdbe-2421-40b2-80e1-f852c76ed847" width="480"/> | <img src="https://github.com/user-attachments/assets/ec63b29a-1ef7-40ec-b07d-50ca18e81853" width="480" />
  |
 
 | Analytics | T&P Monitor |
