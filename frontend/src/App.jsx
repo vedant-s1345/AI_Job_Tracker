@@ -62,7 +62,7 @@ export default function App() {
   // });
 
   // Demo Mode OFF
-  cconst [isDemo, setIsDemo] = useState(
+  const [isDemo, setIsDemo] = useState(
     () => window.location.hostname !== 'localhost'
   );
 
