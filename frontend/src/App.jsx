@@ -54,12 +54,15 @@ export default function App() {
   const [toast,       setToast]       = useState(null);
 
   // Demo mode — persisted in localStorage
-  const [isDemo, setIsDemo] = useState(() => {
-    const saved = localStorage.getItem('ajtDemoMode');
-    if (saved !== null) return saved === 'true';
-    // Default: demo ON on production, OFF on localhost
-    return window.location.hostname !== 'localhost';
-  });
+  // const [isDemo, setIsDemo] = useState(() => {
+  //   const saved = localStorage.getItem('ajtDemoMode');
+  //   if (saved !== null) return saved === 'true';
+  //   // Default: demo ON on production, OFF on localhost
+  //   return window.location.hostname !== 'localhost';
+  // });
+
+  // Demo Mode OFF
+  const [isDemo, setIsDemo] = useState(false);
 
   // Mobile sidebar open/closed
   const [sidebarOpen, setSidebarOpen] = useState(false);
