@@ -12,6 +12,7 @@
 [![Google Gemini](https://img.shields.io/badge/Gemini_AI-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev)
 [![n8n](https://img.shields.io/badge/n8n-EA4B71?style=for-the-badge&logo=n8n&logoColor=white)](https://n8n.io)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit-00c9a7?style=for-the-badge&logo=vercel&logoColor=white)](https://ai-job-tracker-flame-seven.vercel.app/)
 
 <br/>
 
@@ -37,11 +38,14 @@
 
 | Dashboard | Pipeline (Kanban) |
 |---|---|
-| <img src="https://github.com/user-attachments/assets/931b1354-c6fb-479b-a625-bce576291d98" width="480"/> | <img src="https://github.com/user-attachments/assets/62c453a0-21e6-4858-a21a-52ba7e2c62a3" width="480"/> |
+| <img src="https://github.com/user-attachments/assets/efddbdbe-2421-40b2-80e1-f852c76ed847" width="480"/>
+ | <img src="https://github.com/user-attachments/assets/ec63b29a-1ef7-40ec-b07d-50ca18e81853"  width="480" />
+ |
 
 | Analytics | T&P Monitor |
 |---|---|
-| <img src="https://github.com/user-attachments/assets/58e50810-6d0a-4bc0-b18f-75ef759cd329" width="480"/> | <img src="https://github.com/user-attachments/assets/c23c5f32-f2e3-4c17-ae3c-065f4289cdc6" width="480"/> |
+| <img src="https://github.com/user-attachments/assets/58e50810-6d0a-4bc0-b18f-75ef759cd329" width="480"/> | <img src="https://github.com/user-attachments/assets/2201ea03-68b7-49a5-a911-170f0130739f"  width="480" />
+ |
 ---
 
 ## ✨ Features
@@ -224,6 +228,8 @@ Import and configure 4 workflows in n8n:
 
 ---
 
+> 🌐 **Or try the live demo directly:** [ai-job-tracker-flame-seven.vercel.app](https://ai-job-tracker-flame-seven.vercel.app/)
+
 ## 📡 API Reference
 
 ### Jobs
@@ -286,7 +292,7 @@ Import and configure 4 workflows in n8n:
 - [x] T&P email monitor via n8n + Gmail
 - [x] Daily deadline reminder email
 - [x] Deploy backend to Railway
-- [x] Deploxy frontend to Vercel
+- [x] Deploy frontend to Vercel
 - [x] Deploy n8n to cloud (Railway) (24/7 automation)
 - [x] Analytics charts (Recharts — score trends, pipeline flow)
 
@@ -301,8 +307,9 @@ Import and configure 4 workflows in n8n:
 | **Backend** | Node.js, Express.js, Mongoose |
 | **Database** | MongoDB Atlas |
 | **AI** | Google Gemini 2.0 Flash via n8n |
-| **Automation** | n8n (self-hosted via Docker) |
+| **Automation** | n8n (self-hosted via Docker → deployed on Railway) |
 | **File Processing** | multer, pdf-parse |
+| **Deployment** | Vercel (frontend) · Render (backend) · Railway (n8n) |
 | **Dev Tools** | Postman, VS Code, Docker Desktop |
 
 ---
