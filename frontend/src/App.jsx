@@ -54,9 +54,13 @@ export default function App() {
   const [toast,       setToast]       = useState(null);
 
   // Demo mode — persisted in localStorage
-  const [isDemo, setIsDemo] = useState(
-    () => localStorage.getItem('ajtDemoMode') === 'true'
-  );
+  const [isDemo, setIsDemo] = useState(() => {
+    const saved = localStorage.getItem('ajtDemoMode');
+    if (saved !== null) return saved === 'true';
+    // Default: demo ON on production, OFF on localhost
+    return window.location.hostname !== 'localhost';
+  });
+
   // Mobile sidebar open/closed
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -283,9 +287,8 @@ export default function App() {
                 demoResumes={DEMO_RESUMES}
               />
             )}
-            {page === 'settings'   && (
-              <SettingsPage showToast={showToast} />
-            )}
+            {page === 'settings' && !isDemo && <SettingsPage showToast={showToast} />}
+            
             {page === 'tnp'        && (
               <TnPPage
                 showToast={showToast}

@@ -125,12 +125,9 @@ export default function Sidebar({
 
         <p className="sb-sect" style={{ marginTop: 12 }}>System</p>
         {NAV_BOTTOM.map(n => (
-          <NavItem
-            key={n.key}
-            item={n}
-            active={activePage === n.key}
-            onNav={onNav}
-          />
+          // Hide settings in demo mode
+          isDemo ? null :
+          <NavItem key={n.key} item={n} active={activePage === n.key} onNav={onNav} />
         ))}
       </nav>
 
